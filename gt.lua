@@ -37,7 +37,6 @@ local timer = Event.timer(CdTime, function()
                 table.insert(progressBar,"=")
             end
        end
-       print(percent >= CapacityHigh)
        if percent >= CapacityHigh then
             Redstone.setOutput(OutputSide,0)
        end
@@ -45,6 +44,7 @@ local timer = Event.timer(CdTime, function()
             Redstone.setOutput(OutputSide,15)
        end
        table.insert(progressBar,"]")
+       os.execute("cls")
        print("当前电池容量:".. table.concat(progressBar))
        else
         print("NOT RUNNING")
