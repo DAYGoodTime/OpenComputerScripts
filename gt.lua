@@ -7,8 +7,9 @@ Runing = false;
 CdTime = 20
 CapacityHigh = 95
 CapacityLow = 30
-AcceptSide = 4;
+AcceptSide = 3;
 OutputSide = 5;
+NoticeSide = 1;
 
 local timer = Event.timer(CdTime, function()
     if Redstone.getInput(AcceptSide) == 15 then
@@ -16,6 +17,7 @@ local timer = Event.timer(CdTime, function()
     else
         Runing = false;
     end
+    os.execute("cls")
     if Runing then
        local percent_float = (Gt.getEUStored() / Gt.getEUMaxStored())
        local percent = 0
@@ -37,23 +39,34 @@ local timer = Event.timer(CdTime, function()
                 table.insert(progressBar,"=")
             end
        end
+       local shouldRunNuclear = false
        if percent >= CapacityHigh then
             Redstone.setOutput(OutputSide,0)
+            Redstone.setOutput(NoticeSide,0)
+            shouldRunNuclear =false
        end
        if percent <= CapacityLow then
             Redstone.setOutput(OutputSide,15)
+            Redstone.setOutput(NoticeSide,15)
+            shouldRunNuclear = true
        end
        table.insert(progressBar,"]")
-       os.execute("cls")
        print("当前电池容量:".. table.concat(progressBar))
+       if shouldRunNuclear then
+        print("反应堆状态: 启动！中")
        else
-        print("NOT RUNNING")
+        print("反应堆状态: 未启动")
+       end
+    else
+        print("控制信号为空,不启动")
+        Redstone.setOutput(OutputSide,0)
+        Redstone.setOutput(NoticeSide,0)
     end
 end, math.huge)
 
 while true do
     local _, _, _, _, _, eventID = Event.pull()
-  
+
     if eventID == "interrupted" then
       Event.cancel(timer)
       break
