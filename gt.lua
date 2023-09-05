@@ -10,6 +10,7 @@ CapacityLow = 30
 AcceptSide = 3;
 OutputSide = 5;
 NoticeSide = 1;
+ShouldRunNuclear = false
 
 local timer = Event.timer(CdTime, function()
     if Redstone.getInput(AcceptSide) == 15 then
@@ -39,16 +40,15 @@ local timer = Event.timer(CdTime, function()
                 table.insert(progressBar,"=")
             end
        end
-       local shouldRunNuclear = false
        if percent >= CapacityHigh then
             Redstone.setOutput(OutputSide,0)
             Redstone.setOutput(NoticeSide,0)
-            shouldRunNuclear =false
+            ShouldRunNuclear =false
        end
        if percent <= CapacityLow then
             Redstone.setOutput(OutputSide,15)
             Redstone.setOutput(NoticeSide,15)
-            shouldRunNuclear = true
+            ShouldRunNuclear = true
        end
        table.insert(progressBar,"]")
        print("当前电池容量:".. table.concat(progressBar))
