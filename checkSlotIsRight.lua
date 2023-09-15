@@ -11,13 +11,8 @@ local targetProject = "day"
 
 local coolerList = {}
 local fuelList = {}
-
--- checking 
-
 function Main()
     jsonFile = GetItemConfig()
-    -- checking cooling
-    print(#jsonFile[1].slot)
     coolerPoint = 1;
     fuelPoint = 1;
 
@@ -25,14 +20,14 @@ function Main()
     ChamberStacks = Chamber.getAll()
     for index,item in pairs(ChamberStacks) do
         if item.name==CoolerName then
-            if jsonFile[1].slot[coolerPoint] ~= index then
-                jsonFile[1].slot[coolerPoint] = index
+            if jsonFile[targetProject][1].slot[coolerPoint] ~= index then
+                jsonFile[targetProject][1].slot[coolerPoint] = index
                 coolerPoint = coolerPoint+1
             end
             table.insert(coolerList,index .. " ")
         elseif item.name==FuelName  then
-            if jsonFile[2].slot[fuelPoint] ~= index then
-                jsonFile[2].slot[fuelPoint] = index
+            if jsonFile[targetProject][2].slot[fuelPoint] ~= index then
+                jsonFile[targetProject][2].slot[fuelPoint] = index
                 fuelPoint = fuelPoint+1
             end
             table.insert(fuelList,index .. " ")
@@ -55,14 +50,7 @@ end
 function GetItemConfig()
     if itemConfig then
         local ItemConfig_table = JSON:decode(itemConfig:read("*a"))
-        if (ItemConfig_table[targetProject]) then
-            itemConfig:close()
-            return ItemConfig_table[targetProject]
-        else
-            print("The project name you entered could not be found.")
-            itemConfig:close()
-            os.exit(0)
-        end
+        return ItemConfig_table
     else
         print("config.json not found.")
         os.exit(0)
