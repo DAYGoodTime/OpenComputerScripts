@@ -5,14 +5,16 @@ local itemConfig = io.open("config.json", "r")
 local redstone = component.redstone
 local transposer = component.transposer
 local reactor_chamber = component.reactor_chamber
+-- 上:1
+-- 下:0
 -- 北:2
 -- x东:5
 -- 西:4
 -- z南:3
-local sourceBoxSide = 3 -- 输入箱子
-local reactorChamberSide = 2 -- 核电仓
-local outPutBoxSide = 5 -- 输出箱子e
-local outPutDrawerSide = 0 -- 输出抽屉
+local sourceBoxSide = 2 -- 输入箱子
+local reactorChamberSide = 0 -- 核电仓
+local outPutBoxSide = 4 -- 输出箱子e
+local outPutDrawerSide = 6 -- 输出抽屉
 local runTime = 0 -- 正常运行时间
 
 -- 检查原材料箱中原材料数量
@@ -42,7 +44,6 @@ local function configSelect()
 
     if itemConfig then
         local ItemConfig_table = JSON:decode(itemConfig:read("*a"))
-
         if (ItemConfig_table[project]) then
             itemConfig:close()
             return ItemConfig_table[project]

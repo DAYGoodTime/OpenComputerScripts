@@ -1,7 +1,7 @@
 {
-    "siLianYouBang": [
+    "day": [
         {
-            "name": "gregtech:gt.360k_Helium_Coolantcell",
+            "name": "gregtech:gt.360k_Space_Coolantcell",
             "changeName":-1,
             "dmg": 90,
             "count": 14,
