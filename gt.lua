@@ -52,7 +52,7 @@ local timer = Event.timer(CdTime, function()
        end
        table.insert(progressBar,"]")
        print("当前电池容量:".. table.concat(progressBar))
-       if shouldRunNuclear then
+       if ShouldRunNuclear then
         print("反应堆状态: 启动！中")
        else
         print("反应堆状态: 未启动")

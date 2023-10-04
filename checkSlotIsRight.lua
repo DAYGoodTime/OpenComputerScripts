@@ -21,13 +21,13 @@ function Main()
     for index,item in pairs(ChamberStacks) do
         if item.name==CoolerName then
             if jsonFile[targetProject][1].slot[coolerPoint] ~= index then
-                jsonFile[targetProject][1].slot[coolerPoint] = index
+                jsonFile[targetProject][1].slot[coolerPoint] = index+1
                 coolerPoint = coolerPoint+1
             end
             table.insert(coolerList,index .. " ")
         elseif item.name==FuelName  then
             if jsonFile[targetProject][2].slot[fuelPoint] ~= index then
-                jsonFile[targetProject][2].slot[fuelPoint] = index
+                jsonFile[targetProject][2].slot[fuelPoint] = index+1
                 fuelPoint = fuelPoint+1
             end
             table.insert(fuelList,index .. " ")
@@ -50,6 +50,7 @@ end
 function GetItemConfig()
     if itemConfig then
         local ItemConfig_table = JSON:decode(itemConfig:read("*a"))
+        itemConfig:close()
         return ItemConfig_table
     else
         print("config.json not found.")

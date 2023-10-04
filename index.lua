@@ -12,9 +12,9 @@ local reactor_chamber = component.reactor_chamber
 -- 西:4
 -- z南:3
 local sourceBoxSide = 2 -- 输入箱子
-local reactorChamberSide = 0 -- 核电仓
+local reactorChamberSide = 3 -- 核电仓
 local outPutBoxSide = 4 -- 输出箱子e
-local outPutDrawerSide = 6 -- 输出抽屉
+local outPutDrawerSide = 4 -- 输出抽屉
 local runTime = 0 -- 正常运行时间
 
 -- 检查原材料箱中原材料数量
@@ -62,10 +62,12 @@ end
 -- 停止核电仓
 local function stop()
     redstone.setOutput(reactorChamberSide, 0)
+    os.sleep(1)
 end
 
 --启动核电仓
 local function start()
+    os.sleep(1)
     redstone.setOutput(reactorChamberSide, 14)
 end
 
@@ -87,7 +89,7 @@ local function insertItemsIntoReactorChamber(project)
     end
 end
 
--- 核电仓热量检测
+-- 核电仓热量检测 还有信号检测
 local function checkReactorChamberHeat()
     if (reactor_chamber.getHeat() >= 9601) then
         os.execute("cls")
@@ -98,6 +100,16 @@ local function checkReactorChamberHeat()
         os.execute("cls")
         print("reactorChamber is Running!")
     end
+end
+
+local function checkRedStoneSingle()
+    if redstone.getInput(5)>0 then
+        checkReactorChamberHeat();
+    else
+        os.execute("cls")
+        print("reactorChamber is Close")
+    end
+
 end
 
 -- 物品移除核电仓
@@ -185,7 +197,7 @@ local function reactorChamberRunTime(project)
     print("reactorChamber is Running!")
     while true do
         checkItemDMG(project)
-        checkReactorChamberHeat()
+        checkRedStoneSingle()
     end
 end
 
